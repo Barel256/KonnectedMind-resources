@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konnected Minds — Resource Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0D1117;
+      --navy2:  #111827;
+      --green:  #39FF14;
+      --white:  #F9FAFB;
+      --grey:   #9CA3AF;
+      --border: #1F2937;
+      --card:   #161D27;
+    }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--navy);
+      z-index: 10;
+    }
+
+    .wordmark {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.05em;
+      color: var(--white);
+    }
+    .wordmark span { color: var(--green); }
+
+    .nav-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--grey);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 64px 32px 48px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--green);
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 42px;
+      line-height: 1.08;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span { color: var(--green); }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--grey);
+      line-height: 1.75;
+      max-width: 520px;
+      margin-bottom: 32px;
+    }
+
+    .hero-rule {
+      width: 48px;
+      height: 2px;
+      background: var(--green);
+    }
+
+    /* ── FILTER ── */
+    .filter-row {
+      padding: 0 32px 32px;
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--grey);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    /* ── GRID ── */
+    .grid {
+      padding: 0 32px 80px;
+      max-width: 720px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* ── RESOURCE CARD ── */
+    .resource-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 24px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.15s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .resource-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--green);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+
+    .resource-card:hover {
+      border-color: var(--green);
+      transform: translateY(-2px);
+    }
+
+    .resource-card:hover::before { transform: scaleX(1); }
+
+    .card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 4px 10px;
+      border-radius: 2px;
+      width: fit-content;
+    }
+
+    .tag-checklist { background: rgba(57,255,20,0.08); color: var(--green); }
+    .tag-guide     { background: rgba(96,165,250,0.1);  color: #60A5FA; }
+    .tag-template  { background: rgba(167,139,250,0.1); color: #A78BFA; }
+    .tag-coming    { background: rgba(156,163,175,0.08); color: var(--grey); }
+
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--white);
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: var(--grey);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .card-items {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--grey);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .card-arrow {
+      font-size: 16px;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    /* COMING SOON state */
+    .resource-card.soon {
+      pointer-events: none;
+      opacity: 0.45;
+    }
+
+    .resource-card.soon::before { display: none; }
+
+    /* ── DIVIDER LABEL ── */
+    .section-label {
+      padding: 0 32px 16px;
+      max-width: 720px;
+      margin: 24px auto 0;
+    }
+
+    .section-label span {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--grey);
+    }
+
+    /* ── CTA STRIP ── */
+    .cta-strip {
+      background: var(--navy2);
+      border-top: 1px solid var(--border);
+      padding: 48px 32px;
+      text-align: center;
+    }
+
+    .cta-strip p {
+      font-size: 13px;
+      color: var(--grey);
+      margin-bottom: 6px;
+    }
+
+    .cta-strip h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--green);
+      color: #0D1117;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 14px 36px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: opacity 0.15s;
+    }
+    .cta-btn:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      border-top: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ft-brand {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--white);
+    }
+
+    .ft-tag { font-size: 11px; color: #4B5563; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 560px) {
+      .hero { padding: 40px 20px 32px; }
+      .hero h1 { font-size: 30px; }
+      .filter-row { padding: 0 20px 24px; }
+      .grid { grid-template-columns: 1fr; padding: 0 20px 60px; }
+      .section-label { padding: 0 20px 12px; }
+      nav { padding: 16px 20px; }
+      footer { padding: 14px 20px; flex-direction: column; gap: 6px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wordmark">KONNECTED<span>MINDS</span></div>
+  <div class="nav-tag">Resource Hub</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Free Resources</div>
+  <h1>Tools to Help You<br>Build <span>Smarter.</span></h1>
+  <p>Every resource here is drawn directly from the conversations on Konnected Minds — turned into practical, actionable guides you can use today. No theory. No fluff.</p>
+  <div class="hero-rule"></div>
+</div>
+
+<!-- FILTER -->
+<div class="filter-row">
+  <button class="filter-btn active" onclick="filterCards('all', this)">All</button>
+  <button class="filter-btn" onclick="filterCards('checklist', this)">Checklists</button>
+  <button class="filter-btn" onclick="filterCards('guide', this)">Guides</button>
+  <button class="filter-btn" onclick="filterCards('template', this)">Templates</button>
+</div>
+
+<!-- ─── LIVE RESOURCES ─── -->
+<div class="section-label"><span>Available Now</span></div>
+
+<div class="grid" id="card-grid">
+
+  <!-- CARD 1 — Capital Blueprint (LIVE) -->
+  <a href="capital-blueprint.html" class="resource-card" data-type="checklist">
+    <div class="card-tag tag-checklist">
+      <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+      Checklist
+    </div>
+    <div class="card-title">The Capital Blueprint</div>
+    <div class="card-desc">A Ghanaian Entrepreneur's step-by-step guide to securing funding — drawn from Dian Ekufu's full investor-readiness framework.</div>
+    <div class="card-meta">
+      <span class="card-items">36 Action Items &middot; 7 Phases</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a>
+
+  <!-- 
+    ════════════════════════════════════════
+    HOW TO ADD A NEW CARD:
+    1. Copy one of the blocks below
+    2. Remove the "soon" class from the <a> tag
+    3. Change href to your new filename e.g. href="marketing-checklist.html"
+    4. Update the title, description, tag, and item count
+    5. Save and push to GitHub. Done.
+    ════════════════════════════════════════
+  -->
+
+  <!-- CARD 2 — Coming Soon -->
+  <a href="#" class="resource-card soon" data-type="checklist">
+    <div class="card-tag tag-coming">Coming Soon</div>
+    <div class="card-title">The Marketing Checklist</div>
+    <div class="card-desc">A practical guide to building and executing a marketing strategy for Ghanaian businesses — from content to conversion.</div>
+    <div class="card-meta">
+      <span class="card-items">Coming This Month</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a>
+
+  <!-- CARD 3 — Coming Soon -->
+  <a href="#" class="resource-card soon" data-type="guide">
+    <div class="card-tag tag-coming">Coming Soon</div>
+    <div class="card-title">The Business Registration Guide</div>
+    <div class="card-desc">Everything you need to formally register your business in Ghana — step by step, with every agency, cost, and document listed.</div>
+    <div class="card-meta">
+      <span class="card-items">Coming Soon</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a>
+
+  <!-- CARD 4 — Coming Soon -->
+  <a href="#" class="resource-card soon" data-type="template">
+    <div class="card-tag tag-coming">Coming Soon</div>
+    <div class="card-title">Pitch Deck Template</div>
+    <div class="card-desc">A structured, investor-ready pitch deck framework built around Ghana's funding landscape. Fill in your numbers and pitch with confidence.</div>
+    <div class="card-meta">
+      <span class="card-items">Coming Soon</span>
+      <span class="card-arrow">→</span>
+    </div>
+  </a>
+
+</div>
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <p>Want deeper discussions, live Q&As, and a community of builders?</p>
+  <h2>Join the Konnected Minds Triibe</h2>
+  <a href="https://www.triibe.io/community/konnected-academy" target="_blank" class="cta-btn">Join the Triibe Now</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-brand">KONNECTED MINDS</div>
+  <div class="ft-tag">Africa's Biggest Business Podcast</div>
+</footer>
+
+<script>
+  function filterCards(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.resource-card').forEach(card => {
+      if (type === 'all') {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = card.dataset.type === type ? 'flex' : 'none';
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
